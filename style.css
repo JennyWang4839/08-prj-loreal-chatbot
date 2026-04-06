@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Helvetica Now';
+  src: url('fonts/HelveticaNow-Text.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* —— basic reset —— */
 * {
   box-sizing: border-box;
@@ -7,7 +14,7 @@
 
 /* —— body + fonts —— */
 body {
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Now', Helvetica, Arial, sans-serif;
   color: #333;
   display: flex;
   justify-content: center;
@@ -28,6 +35,11 @@ body {
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 10px;
+  color: #E3A535;
+}
+
+.logo {
+  width: 200px;
 }
 
 /* chat window */
@@ -37,7 +49,7 @@ body {
 
 .chat-window {
   height: 360px;
-  border: 1px solid #000;
+  border: 1px solid #E3A535;
   padding: 20px;
   font-size: 18px;
   line-height: 1.5;
@@ -70,18 +82,18 @@ body {
 .chat-form input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #E3A535;
   font-size: 18px;
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #E3A535;
   outline-offset: 2px;
 }
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: #000000;
   color: #fff;
   border: none;
   padding: 12px;
@@ -99,11 +111,11 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #E3A535;
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #E3A535;
   outline-offset: 2px;
 }
 
@@ -139,5 +151,5 @@ body {
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: #E3A535;
 }

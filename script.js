@@ -24,52 +24,57 @@ Always remain friendly, professional, and helpful.
 `;
 
 function addMessage(message, sender) {
-    const msgDiv = document.createElement("div");
-    msgDiv.classList.add("message", sender);
-    msgDiv.textContent = message;
-    chatWindow.appendChild(msgDiv);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+  const msgDiv = document.createElement("div");
+
+  msgDiv.classList.add("message", sender);
+
+  msgDiv.textContent = message;
+
+  chatWindow.appendChild(msgDiv);
+
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 async function sendMessage() {
+  const message = userInput.value.trim() + "\n\n";
 
-    const message = userInput.value.trim();
-    if (!message) return;
+  if (!message) return;
 
-    addMessage(message, "user");
-    userInput.value = "";
+  addMessage(message, "user");
+  userInput.value = "";
 
-    try {
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${APIKey}`
+      },
+      body: JSON.stringify({
+          model: "gpt-4.1-mini",
+          messages: [
+              { role: "system", content: SYSTEM_PROMPT },
+              { role: "user", content: message }
+          ],
+          temperature: 0.7
+      })
+    });
 
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${APIKey}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4.1-mini",
-                messages: [
-                    { role: "system", content: SYSTEM_PROMPT },
-                    { role: "user", content: message }
-                ],
-                temperature: 0.7
-            })
-        });
+    const data = await response.json();
+    const botReply = data.choices[0].message.content + "\n\n";
 
-        const data = await response.json();
-        const botReply = data.choices[0].message.content;
+    addMessage(botReply, "bot");
 
-        addMessage(botReply, "bot");
+  } 
 
-    } catch (error) {
-        addMessage("Sorry, something went wrong. Please try again.", "bot");
-        console.error(error);
-    }
+  catch (error) {
+    addMessage("Sorry, something went wrong. Please try again.", "bot");
+    console.error(error);
+  }
 }
 
 // Set initial message
-chatWindow.textContent = "👋 Hello! How can I help you today?";
+chatWindow.textContent = "👋 Hello! How can I help you today?\n";
 
 /* Handle form submit */
 chatForm.addEventListener("submit", (e) => {

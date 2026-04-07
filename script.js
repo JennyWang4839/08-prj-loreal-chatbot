@@ -38,7 +38,7 @@ function addMessage(message, sender) {
 }
 
 async function sendMessage() {
-  const message = userInput.value.trim() + "\n\n";
+  const message = "You: " + userInput.value.trim() + "\n\n";
 
   if (!message) return;
 

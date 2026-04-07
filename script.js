@@ -23,6 +23,8 @@ If a user asks something unrelated, respond with something like:
 Always remain friendly, professional, and helpful.
 `;
 
+const workerUrl = "https://loreal-openai-api.jennywang745.workers.dev/";
+
 function addMessage(message, sender) {
   const msgDiv = document.createElement("div");
 
@@ -44,19 +46,16 @@ async function sendMessage() {
   userInput.value = "";
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch(workerUrl, {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${APIKey}`
       },
       body: JSON.stringify({
-          model: "gpt-4.1-mini",
           messages: [
               { role: "system", content: SYSTEM_PROMPT },
               { role: "user", content: message }
           ],
-          temperature: 0.7
       })
     });
 
